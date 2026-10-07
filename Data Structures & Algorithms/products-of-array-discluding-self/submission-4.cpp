@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> out(n, 1);
+        
+        // Pass 1: Calculate prefix products
+        // out[i] will contain the product of all elements to the left of i
+        int leftProduct = 1;
+        for (int i = 0; i < n; i++) {
+            out[i] = leftProduct;
+            leftProduct *= nums[i];
+        }
+        
+        // Pass 2: Calculate suffix products on the fly and multiply with prefix
+        int rightProduct = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            out[i] *= rightProduct;
+            rightProduct *= nums[i];
+        }
+        
+        return out;
+    }
+};
